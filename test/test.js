@@ -58,3 +58,14 @@ PentagoTestCase.prototype.testStory6 = function () {
     assertEquals(game2,2);
 
 };
+
+//Le joueur noir place une bille en a1. Une bille noire est maintenant en a1 et deux billes sont sur le plateau.
+PentagoTestCase.prototype.testStory7 = function () {
+
+    e.addBille();
+    var p = e.get_Plateau()[0][0][0][0];
+    assertEquals(p,2);
+    var b = e.get_nbBilles();
+    assertEquals(b,2);
+
+};
