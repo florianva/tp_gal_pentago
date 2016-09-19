@@ -96,7 +96,7 @@ var Engine = function () {
                 for (var k = 0; k < 3; k++) {
                     for (var l = 0; l < 3; l++) {
                         if (i == this.get_iselect() && j == this.get_jselect()) {
-                            new_Plateau[i][j][k][l] = this.get_Plateau()[i][j][2 - l][k];
+                                new_Plateau[i][j][k][l] = this.get_Plateau()[i][j][2 - l][k];
                         }else{
                             new_Plateau[i][j][k][l] = this.get_Plateau()[i][j][k][l];
                         }

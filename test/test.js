@@ -69,3 +69,15 @@ PentagoTestCase.prototype.testStory7 = function () {
     assertEquals(b,2);
 
 };
+
+//Le joueur noir fait une rotation anti-horaire au plateau supérieur gauche. La bille blanche est de nouveau en a1 et la bille noire en a3.
+PentagoTestCase.prototype.testStory8 = function () {
+
+    e.rotate();
+    var p = e.get_Plateau()[0][0][0][0];
+    assertEquals(p,1);
+    var p = e.get_Plateau()[0][0][0][3];
+    assertEquals(p,2);
+
+
+};
