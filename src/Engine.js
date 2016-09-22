@@ -6,7 +6,7 @@ var Engine = function () {
 
     var private_nbBilles = 0;
     var private_Plateau = new Array;
-    var new_Plateau = new Array;
+
     var private_iselect = 1;
     var private_jselect = 1;
     var private_kselect;
@@ -22,23 +22,24 @@ var Engine = function () {
         NOIR : 2
     }
 
-    //Initialisation des tableaux
-    for(var i=0; i<2; i++){
-        private_Plateau[i]=new Array();
-        new_Plateau[i]=new Array();
-        for(var j=0; j<2; j++){
-            private_Plateau[i][j]= new Array();
-            new_Plateau[i][j]=new Array();
-            for(var k=0; k<3; k++){
-                private_Plateau[i][j][k] = new Array();
-                new_Plateau[i][j][k]=new Array();
-                for(var l=0; l<3; l++){
-                    private_Plateau[i][j][k][l] = this.listeJoueurs.VIDE;
-                    new_Plateau[i][j][k][l] = this.listeJoueurs.VIDE;
+    this.resetPlateau = function(plateau){
+
+        //Initialisation des tableaux
+        for (var i = 0; i < 2; i++) {
+            plateau[i] = new Array();
+            for (var j = 0; j < 2; j++) {
+                plateau[i][j] = new Array();
+                for (var k = 0; k < 3; k++) {
+                    plateau[i][j][k] = new Array();
+                    for (var l = 0; l < 3; l++) {
+                        plateau[i][j][k][l] = this.listeJoueurs.VIDE;
+                    }
                 }
             }
         }
     }
+
+
 
 
 
@@ -52,24 +53,29 @@ var Engine = function () {
 
         if (posascii < 100) {
             this.set_iselect(0);
-            this.set_kselect(posascii - 97);
+            this.set_lselect(posascii - 97);
         } else {
             this.set_iselect(1);
-            this.set_kselect(posascii - 97 - 3);
+            this.set_lselect(posascii - 97 - 3);
         }
 
         if (ord < 4) {
             this.set_jselect(0);
-            this.set_lselect(ord - 1);
+            this.set_kselect(ord - 1);
         } else {
             this.set_jselect(1);
-            this.set_lselect(ord - 4);
+            this.set_kselect(ord - 4);
         }
 
         console.log("i = " + this.get_iselect() + " j = " + this.get_jselect() + " k = " + this.get_kselect() + " l = " + this.get_lselect());
-        private_Plateau[this.get_iselect()][this.get_jselect()][this.get_kselect()][this.get_lselect()]=this.get_Tour();
-        this.set_Plateau(private_Plateau);
-        this.set_nbBilles(private_nbBilles + 1);
+        if(this.get_Plateau()[this.get_iselect()][this.get_jselect()][this.get_kselect()][this.get_lselect()] == this.listeJoueurs.VIDE) {
+            private_Plateau[this.get_iselect()][this.get_jselect()][this.get_kselect()][this.get_lselect()] = this.get_Tour();
+            this.set_Plateau(private_Plateau);
+            this.set_nbBilles(private_nbBilles + 1);
+        }else{
+            throw new Error('BilleHere');
+            console.log("Une bille est deja placee")
+        }
     };
 
 
@@ -89,21 +95,20 @@ var Engine = function () {
 
 
     //fonction de rotation du plateau selectionné
-    this.rotate = function () {
-
-        for(var i=0; i<2; i++) {
-            for (var j = 0; j < 2; j++) {
-                for (var k = 0; k < 3; k++) {
-                    for (var l = 0; l < 3; l++) {
-                        if (i == this.get_iselect() && j == this.get_jselect()) {
-                                new_Plateau[i][j][k][l] = this.get_Plateau()[i][j][2 - l][k];
+    this.rotate = function (rotation) {
+        var new_Plateau = new Array;
+        this.resetPlateau(new_Plateau);
+            for (var k = 0; k < 3; k++) {
+                for (var l = 0; l < 3; l++) {
+                        if (rotation == 1) {
+                            new_Plateau[this.get_iselect()][this.get_jselect()][k][l] = this.get_Plateau()[this.get_iselect()][this.get_jselect()][2 - l][k];
                         }else{
-                            new_Plateau[i][j][k][l] = this.get_Plateau()[i][j][k][l];
+                            new_Plateau[this.get_iselect()][this.get_jselect()][k][l] = this.get_Plateau()[this.get_iselect()][this.get_jselect()][l][2 - k];
                         }
-                    }
                 }
             }
-        }
+
+
         this.set_Plateau(new_Plateau);
     };
 
