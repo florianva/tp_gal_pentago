@@ -7,16 +7,16 @@ var e = new Engine();
 //A la création du jeu, le plateau est totalement vide. Le nombre de billes est zéro.
 PentagoTestCase.prototype.testStory1 = function () {
 
-    var b1 = e.get_nbBilles();
+    var b1 = e.get_nb_billes();
     assertEquals(b1,0);
 
-    p1 = e.get_Plateau()
-    e.resetPlateau(p1)
+    p1 = e.get_plateau()
+    e.reset_plateau(p1)
     for(var i=0; i<2; i++){
         for(var j=0; j<2; j++){
             for(var k=0; k<3; k++){
                 for(var l=0; l<3; l++){
-                    var p1 = e.get_Plateau()[i][j][k][l];
+                    var p1 = e.get_plateau()[i][j][k][l];
                     assertEquals(p1,0);
                 }
             }
@@ -27,7 +27,7 @@ PentagoTestCase.prototype.testStory1 = function () {
 //Le joueur blanc commence.
 PentagoTestCase.prototype.testStory2 = function () {
 
-    var game = e.get_Tour();
+    var game = e.get_tour();
     assertEquals(game,1);
 };
 
@@ -35,10 +35,10 @@ PentagoTestCase.prototype.testStory2 = function () {
 //Le joueur blanc place une bille blanche (marble) sur l’emplacement en haut à gauche. Cet emplacement est noté : ’a1’. ’a’ correspond à la colonne et ’1’ à la ligne.
 PentagoTestCase.prototype.testStory3 = function () {
 
-    e.addBille();
+    e.add_bille();
     console.log("Placement de la bille : ");
     for (var k = 0; k < 3; k++) {
-        console.log(e.get_Plateau()[0][0][k]);
+        console.log(e.get_plateau()[0][0][k]);
 
     }
 };
@@ -46,7 +46,7 @@ PentagoTestCase.prototype.testStory3 = function () {
 //Le nombre de billes sur le plateau est égal à 1.
 PentagoTestCase.prototype.testStory4 = function () {
 
-    var b1 = e.get_nbBilles();
+    var b1 = e.get_nb_billes();
     assertEquals(b1,1);
 };
 
@@ -56,7 +56,7 @@ PentagoTestCase.prototype.testStory5 = function () {
     e.rotate(1);
     console.log("Rotation : ");
     for (var k = 0; k < 3; k++) {
-        console.log(e.get_Plateau()[0][0][k]);
+        console.log(e.get_plateau()[0][0][k]);
 
     }
 };
@@ -64,7 +64,7 @@ PentagoTestCase.prototype.testStory5 = function () {
 //C’est au joueur noir de jouer.
 PentagoTestCase.prototype.testStory6 = function () {
 
-    var game2 = e.get_Tour();
+    var game2 = e.get_tour();
     assertEquals(game2,2);
 
 };
@@ -72,15 +72,15 @@ PentagoTestCase.prototype.testStory6 = function () {
 //Le joueur noir place une bille en a1. Une bille noire est maintenant en a1 et deux billes sont sur le plateau.
 PentagoTestCase.prototype.testStory7 = function () {
 
-    e.addBille();
-    var p = e.get_Plateau()[0][0][0][0];
+    e.add_bille();
+    var p = e.get_plateau()[0][0][0][0];
     assertEquals(p,2);
-    var b = e.get_nbBilles();
+    var b = e.get_nb_billes();
     assertEquals(b,2);
 
     console.log("Deuxieme bille : ");
     for (var k = 0; k < 3; k++) {
-            console.log(e.get_Plateau()[0][0][k]);
+            console.log(e.get_plateau()[0][0][k]);
 
     }
 
@@ -92,12 +92,12 @@ PentagoTestCase.prototype.testStory8 = function () {
     e.rotate(2);
     console.log("Deuxieme rotation :");
     for (var k = 0; k < 3; k++) {
-        console.log(e.get_Plateau()[0][0][k]);
+        console.log(e.get_plateau()[0][0][k]);
 
     }
-    var plateau_blanc = e.get_Plateau()[0][0][0][0];
+    var plateau_blanc = e.get_plateau()[0][0][0][0];
     assertEquals(plateau_blanc,1);
-    var plateau_noir = e.get_Plateau()[0][0][2][0];
+    var plateau_noir = e.get_plateau()[0][0][2][0];
     assertEquals(plateau_noir,2);
 
 
@@ -106,15 +106,13 @@ PentagoTestCase.prototype.testStory8 = function () {
 PentagoTestCase.prototype.testStory9 = function () {
 
     try{
-        e.addBille();
+        e.add_bille();
     }catch(e){
-        if(e.message = "BilleHere"){
-            assertTrue(true);
-        }
+        assertTrue(true);
     }
     console.log("Troisieme bille : ");
     for (var k = 0; k < 3; k++) {
-        console.log(e.get_Plateau()[0][0][k]);
+        console.log(e.get_plateau()[0][0][k]);
 
     }
 
