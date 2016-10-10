@@ -147,6 +147,38 @@ var Engine = function () {
         this.set_sous_plateau(new_plateau, dimens_i, dimens_j);
     };
 
+    this.get_win = function (dimens_j, dimens_k, player, nb_max) {
+        var dimens_l;
+        var dimens_i;
+        var nb = 0;
+
+        for (dimens_i = 0; dimens_i < 2; dimens_i += 1) {
+            for (dimens_l = 0; dimens_l < 3; dimens_l += 1) {
+                nb = this.count_lign(dimens_i, dimens_j, dimens_k, dimens_l, player, nb);
+                if (nb === nb_max) {
+                    console.log(player + " WIN !");
+                    return player;
+                }
+            }
+        }
+        return 0;
+
+    };
+
+    this.count_lign = function (dimens_i, dimens_j, dimens_k, dimens_l, player, nb_align) {
+
+        if (this.get_plateau()[dimens_i][dimens_j][dimens_k][dimens_l] === player) {
+            nb_align += 1;
+        } else {
+            nb_align = 0;
+        }
+        return nb_align;
+    };
+
+
+
+
+
 
     this.get_nb_billes = function () {
         return private_nb_billes;

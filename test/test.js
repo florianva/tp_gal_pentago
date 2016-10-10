@@ -192,9 +192,11 @@ PentagoTestCase.prototype.testStory10 = function (){
 
 PentagoTestCase.prototype.testStory11 = function (){
 
-    var plateau_blanc_1 = e.get_plateau()[0][0][0][4];
+    e.add_bille("e1");
+    var plateau_blanc_1 = e.get_plateau()[1][0][0][1];
     assertEquals(plateau_blanc_1,1);
 
-    e.get_win() == 1;
+    var nb = e.get_win(0,0,1,5);
+    assertEquals(nb,1);
 
 };
