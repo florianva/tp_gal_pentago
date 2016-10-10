@@ -188,6 +188,13 @@ PentagoTestCase.prototype.testStory10 = function (){
     assertEquals(plateau_noir_3,2);
     assertEquals(plateau_noir_4,2);
 
+};
 
+PentagoTestCase.prototype.testStory11 = function (){
+
+    var plateau_blanc_1 = e.get_plateau()[0][0][0][4];
+    assertEquals(plateau_blanc_1,1);
+
+    e.get_win() == 1;
 
 };
