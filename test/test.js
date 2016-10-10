@@ -35,7 +35,7 @@ PentagoTestCase.prototype.testStory2 = function () {
 //Le joueur blanc place une bille blanche (marble) sur l’emplacement en haut à gauche. Cet emplacement est noté : ’a1’. ’a’ correspond à la colonne et ’1’ à la ligne.
 PentagoTestCase.prototype.testStory3 = function () {
 
-    e.add_bille();
+    e.add_bille("a1");
     console.log("Placement de la bille : ");
     for (var k = 0; k < 3; k++) {
         console.log(e.get_plateau()[0][0][k]);
@@ -72,7 +72,7 @@ PentagoTestCase.prototype.testStory6 = function () {
 //Le joueur noir place une bille en a1. Une bille noire est maintenant en a1 et deux billes sont sur le plateau.
 PentagoTestCase.prototype.testStory7 = function () {
 
-    e.add_bille();
+    e.add_bille("a1");
     var p = e.get_plateau()[0][0][0][0];
     assertEquals(p,2);
     var b = e.get_nb_billes();
@@ -106,7 +106,7 @@ PentagoTestCase.prototype.testStory8 = function () {
 PentagoTestCase.prototype.testStory9 = function () {
 
     try{
-        e.add_bille();
+        e.add_bille("a3");
     }catch(e){
         assertTrue(true);
     }
@@ -115,6 +115,79 @@ PentagoTestCase.prototype.testStory9 = function () {
         console.log(e.get_plateau()[0][0][k]);
 
     }
+};
+
+PentagoTestCase.prototype.testStory10 = function (){
+    e.add_bille("b1");
+    e.rotate(1);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[0][0][k]);
+
+    }
+
+    e.add_bille("a2");
+    e.rotate(2);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[0][0][k]);
+
+    }
+    e.add_bille("c1");
+    e.rotate(1);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[0][0][k]);
+
+    }
+    e.add_bille("a3");
+    e.rotate(2);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[0][0][k]);
+
+    }
+    e.add_bille("d1");
+    e.rotate(2);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[1][0][k]);
+
+    }
+    e.add_bille("f3");
+    e.rotate(1);
+    console.log("Rotation : ");
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[1][0][k]);
+
+    }
+
+
+    var plateau_blanc_1 = e.get_plateau()[0][0][0][0];
+    var plateau_blanc_2 = e.get_plateau()[0][0][0][1];
+    var plateau_blanc_3 = e.get_plateau()[0][0][0][2];
+    var plateau_blanc_4 = e.get_plateau()[1][0][0][0];
+
+    var plateau_noir_1 = e.get_plateau()[0][0][2][0];
+    var plateau_noir_2 = e.get_plateau()[0][0][2][1];
+    var plateau_noir_3 = e.get_plateau()[0][0][2][2];
+    var plateau_noir_4 = e.get_plateau()[1][0][2][0];
+
+    for (var k = 0; k < 3; k++) {
+        console.log(e.get_plateau()[0][0][k]);
+
+    }
+
+    assertEquals(plateau_blanc_1,1);
+    assertEquals(plateau_blanc_2,1);
+    assertEquals(plateau_blanc_3,1);
+    assertEquals(plateau_blanc_4,1);
+
+    assertEquals(plateau_noir_1,2);
+    assertEquals(plateau_noir_2,2);
+    assertEquals(plateau_noir_3,2);
+    assertEquals(plateau_noir_4,2);
+
 
 
 };

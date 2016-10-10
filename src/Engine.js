@@ -84,9 +84,9 @@ var Engine = function () {
     };
 
 
-    this.add_bille = function () {
+    this.add_bille = function (position) {
 
-        var position = prompt(this.get_tour() + " : quelle case ?");
+        //var position = prompt(this.get_tour() + " : quelle case ?");
         var posascii = position.charCodeAt(0);
         var ord = position.charAt(1);
 
@@ -144,7 +144,7 @@ var Engine = function () {
                 this.set_rotate(new_plateau, rotation, dimens_i, dimens_j, dimens_k, dimens_l);
             }
         }
-        this.set_plateau(new_plateau);
+        this.set_sous_plateau(new_plateau, dimens_i, dimens_j);
     };
 
 
@@ -161,6 +161,11 @@ var Engine = function () {
     this.set_plateau = function (new_plateau) {
         private_plateau = new_plateau;
     };
+
+    this.set_sous_plateau = function (new_plateau, i, j) {
+        private_plateau[i][j] = new_plateau[i][j];
+    };
+
 
     this.get_iselect = function () {
         return private_iselect;
