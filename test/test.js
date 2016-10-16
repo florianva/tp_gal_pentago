@@ -10,8 +10,8 @@ PentagoTestCase.prototype.testStory1 = function () {
     var b1 = e.get_nb_billes();
     assertEquals(b1,0);
 
-    p1 = e.get_plateau()
-    e.reset_plateau(p1)
+    p1 = e.get_plateau();
+    e.reset_plateau(p1);
     for(var i=0; i<2; i++){
         for(var j=0; j<2; j++){
             for(var k=0; k<3; k++){
@@ -26,8 +26,8 @@ PentagoTestCase.prototype.testStory1 = function () {
 
 //Le joueur blanc commence.
 PentagoTestCase.prototype.testStory2 = function () {
-    e.first_tour(1)
-    var game = e.get_actual()
+    e.first_tour(1);
+    var game = e.get_actual();
     assertEquals(game,1);
 };
 
@@ -215,8 +215,8 @@ PentagoTestCase.prototype.testStory12 = function (){
             }
         }
     }
-    e.first_tour(2)
-    var game = e.get_actual()
+    e.first_tour(2);
+    var game = e.get_actual();
     assertEquals(game,2);
 
     e.add_bille("b2");
@@ -250,4 +250,22 @@ PentagoTestCase.prototype.testStory12 = function (){
     var win = e.get_win(0,0,0,0,2,5);
     assertEquals(win,1);
 
+};
+
+PentagoTestCase.prototype.testStory13 = function () {
+
+    p3 = e.get_plateau();
+    e.reset_plateau(p3);
+    for (var i = 0; i < 2; i++) {
+        for (var j = 0; j < 2; j++) {
+            for (var k = 0; k < 3; k++) {
+                for (var l = 0; l < 3; l++) {
+                    var p3 = e.get_plateau()[i][j][k][l];
+                    assertEquals(p3, 0);
+                }
+            }
+        }
+    }
+
+    assertEquals(game, 2);
 };
