@@ -266,6 +266,7 @@ PentagoTestCase.prototype.testStory13 = function () {
             }
         }
     }
-
-    assertEquals(game, 2);
+    e.first_tour(2);
+    var game2 = e.get_actual();
+    assertEquals(game2, 2);
 };
