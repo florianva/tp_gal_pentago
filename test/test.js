@@ -26,8 +26,8 @@ PentagoTestCase.prototype.testStory1 = function () {
 
 //Le joueur blanc commence.
 PentagoTestCase.prototype.testStory2 = function () {
-
-    var game = e.get_tour();
+    e.first_tour(1)
+    var game = e.get_actual()
     assertEquals(game,1);
 };
 
@@ -64,7 +64,7 @@ PentagoTestCase.prototype.testStory5 = function () {
 //C’est au joueur noir de jouer.
 PentagoTestCase.prototype.testStory6 = function () {
 
-    var game2 = e.get_tour();
+    var game2 = e.get_actual();
     assertEquals(game2,2);
 
 };
@@ -196,7 +196,58 @@ PentagoTestCase.prototype.testStory11 = function (){
     var plateau_blanc_1 = e.get_plateau()[1][0][0][1];
     assertEquals(plateau_blanc_1,1);
 
-    var nb = e.get_win(0,0,1,5);
+    var nb = e.get_win(1,0,0,1,1,5);
     assertEquals(nb,1);
+
+};
+
+PentagoTestCase.prototype.testStory12 = function (){
+
+    p2 = e.get_plateau()
+    e.reset_plateau(p2)
+    for(var i=0; i<2; i++){
+        for(var j=0; j<2; j++){
+            for(var k=0; k<3; k++){
+                for(var l=0; l<3; l++){
+                    var p2 = e.get_plateau()[i][j][k][l];
+                    assertEquals(p2,0);
+                }
+            }
+        }
+    }
+    e.first_tour(2)
+    var game = e.get_actual()
+    assertEquals(game,2);
+
+    e.add_bille("b2");
+    e.rotate(1);
+
+    e.add_bille("d4");
+    e.rotate(2);
+
+    e.add_bille("e5");
+    e.rotate(2);
+
+    e.add_bille("e2");
+    e.rotate(1);
+
+    e.add_bille("d6");
+    e.rotate(1);
+
+    e.add_bille("b6");
+    e.rotate(2);
+
+    e.add_bille("a1");
+    e.rotate(1);
+
+    e.add_bille("b4");
+    e.rotate(1);
+
+    e.add_bille("a3");
+    e.rotate(1);
+
+
+    var win = e.get_win(0,0,0,0,2,5);
+    assertEquals(win,1);
 
 };

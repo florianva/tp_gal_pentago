@@ -10,6 +10,7 @@ var Engine = function () {
     var private_jselect = 1;
     var private_kselect;
     var private_lselect;
+    var private_actual;
     var console = window.console;
     var prompt = window.prompt;
 
@@ -71,8 +72,6 @@ var Engine = function () {
 
     this.bille_placement = function (dimens_i, dimens_j, dimens_k, dimens_l) {
 
-        console.log("i = " + dimens_i + " j = " + dimens_j);
-        console.log("k = " + dimens_k + " l = " + dimens_l);
 
         if (this.get_plateau()[dimens_i][dimens_j][dimens_k][dimens_l] === this.listeJoueurs.VIDE) {
             private_plateau[dimens_i][dimens_j][dimens_k][dimens_l] = this.get_tour();
@@ -107,16 +106,23 @@ var Engine = function () {
 
     //Fonction de récupération du numéro de joueur qui doit jouer
     this.get_tour = function () {
-
-        if (this.get_nb_billes() === 0) {
-            return this.listeJoueurs.BLANC;
+        var old = this.get_actual();
+        if (this.get_actual() === this.listeJoueurs.BLANC) {
+            this.set_actual(this.listeJoueurs.NOIR);
         } else {
-            if (this.get_nb_billes() % 2 === 0) {
-                return this.listeJoueurs.BLANC;
-            } else {
-                return this.listeJoueurs.NOIR;
-            }
+            this.set_actual(this.listeJoueurs.BLANC);
         }
+        return old;
+    };
+
+
+    this.first_tour = function (player) {
+        if (player === 1) {
+            this.set_actual(this.listeJoueurs.BLANC);
+        } else {
+            this.set_actual(this.listeJoueurs.NOIR);
+        }
+        return this.get_actual();
     };
 
     this.set_rotate = function (new_plateau, rotation, dimens_i, dimens_j, dimens_k, dimens_l) {
@@ -147,7 +153,29 @@ var Engine = function () {
         this.set_sous_plateau(new_plateau, dimens_i, dimens_j);
     };
 
-    this.get_win = function (dimens_j, dimens_k, player, nb_max) {
+    this.get_win = function (dimens_i, dimens_j, dimens_k, dimens_l, player, nb_max) {
+        var result;
+        result = this.test_lign(dimens_j, dimens_k, player, nb_max);
+        if (result === 0) {
+            result = this.right_diagonal(dimens_i, dimens_j, dimens_k, dimens_l, player, nb_max);
+            if (result === 0) {
+                result = this.left_diagonal(dimens_i, dimens_j, dimens_k, dimens_l, player, nb_max);
+                //console.log(result);
+                if (result === 0) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
+
+    };
+
+    this.test_lign = function(dimens_j, dimens_k, player, nb_max) {
         var dimens_l;
         var dimens_i;
         var nb = 0;
@@ -156,13 +184,12 @@ var Engine = function () {
             for (dimens_l = 0; dimens_l < 3; dimens_l += 1) {
                 nb = this.count_lign(dimens_i, dimens_j, dimens_k, dimens_l, player, nb);
                 if (nb === nb_max) {
-                    console.log(player + " WIN !");
-                    return player;
+                    console.log(player + " WIN lign!");
+                    return 1;
                 }
             }
         }
         return 0;
-
     };
 
     this.count_lign = function (dimens_i, dimens_j, dimens_k, dimens_l, player, nb_align) {
@@ -175,7 +202,128 @@ var Engine = function () {
         return nb_align;
     };
 
+    this.right_diagonal = function (iselect, jselect, kselect, lselect, player, nb_max) {
+        var ok = 0;
+        while (ok !== 1) {
+            lselect -= 1;
+            if (lselect < 0) {
+                if (iselect === 1) {
+                    iselect = 1;
+                    lselect = 0;
+                } else {
+                    iselect = 0;
+                    lselect = 2;
+                }
+            }
+            kselect += 1;
+            if (kselect > 2) {
+                if (jselect === 1) {
+                    jselect = 1;
+                    kselect = 2;
+                } else {
+                    jselect = 1;
+                    kselect = 0;
+                }
+            }
+            if (jselect === 1 && kselect === 2) {
+                ok = 1;
+            }
+        }
+        return this.test_right_diagonal(iselect, jselect, kselect, lselect, player, nb_max);
+    };
 
+
+    this.left_diagonal = function (iselect, jselect, kselect, lselect, player, nb_max) {
+        var ok = 0;
+        while (ok !== 1) {
+            lselect += 1;
+            if (lselect > 2) {
+                if (iselect === 1) {
+                    iselect = 1;
+                    lselect = 2;
+                } else {
+                    iselect = 1;
+                    lselect = 0;
+                }
+
+            }
+            kselect += 1;
+            if (kselect > 2 && jselect !== 1) {
+                if (jselect === 1) {
+                    jselect = 1;
+                    kselect = 2;
+                } else {
+                    jselect = 1;
+                    kselect = 0;
+                }
+            }
+            if (jselect === 1 && kselect === 2) {
+                ok = 1;
+            }
+        }
+        return this.test_left_diagonal(iselect, jselect, kselect, lselect, player, nb_max);
+    };
+
+
+
+    this.test_right_diagonal = function (iselect, jselect, kselect, lselect, player, nb_max) {
+        var ok = 0;
+        var nb = 0;
+
+        while (ok !== 1) {
+            kselect -= 1;
+            if (kselect < 0) {
+                jselect = 0;
+                kselect = 2;
+            }
+            lselect += 1;
+            if (lselect > 2) {
+                iselect = 1;
+                lselect = 0;
+            }
+
+            nb = this.count_lign(iselect, jselect, kselect, lselect, player, nb);
+            if (nb === nb_max) {
+                console.log(player + " WIN right diagonal !");
+                return 1;
+            }
+
+            if (jselect === 0 && lselect === 2) {
+                ok = 1;
+            }
+            return 0;
+        }
+
+
+    };
+
+    this.test_left_diagonal = function (iselect, jselect, kselect, lselect, player, nb_max) {
+        var ok = 0;
+        var nb = 0;
+
+        while (ok !== 1) {
+            kselect -= 1;
+            if (kselect < 0) {
+                jselect = 0;
+                kselect = 2;
+            }
+            lselect -= 1;
+            if (lselect < 0) {
+                iselect = 0;
+                lselect = 2;
+            }
+            nb = this.count_lign(iselect, jselect, kselect, lselect, player, nb);
+            if (nb === nb_max) {
+                console.log(player + " WIN left diagonal !");
+                return 1;
+            }
+
+            if (jselect === 0 && lselect === 0) {
+                ok = 1;
+            }
+        }
+        return 0;
+    };
 
 
 
@@ -226,6 +374,14 @@ var Engine = function () {
     this.set_lselect = function (new_lselect) {
         private_lselect = new_lselect;
     };
+
+    this.set_actual = function (new_actual) {
+        private_actual = new_actual;
+    };
+    this.get_actual = function () {
+        return private_actual;
+    };
+
 
 
 };
